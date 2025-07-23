@@ -132,7 +132,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         .from('users')
         .select('*')
         .eq('nik_nis', nikNis)
-        .single();
+        .maybeSingle();
 
       if (userError || !userData) {
         setLoading(false);
