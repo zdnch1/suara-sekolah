@@ -90,8 +90,36 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       if (!userData) {
         console.warn(`User with id ${supabaseUser.id} not found in "users" table`);
-        setUser(null);
-        return;
+        // Create user profile if it doesn't exist
+        const { data: newUserData, error: insertError } = await supabase
+          .from('users')
+          .insert({
+            id: supabaseUser.id,
+            nik_nis: supabaseUser.email?.split('@')[0] || '',
+            display_id: Math.random().toString(36).substring(2, 10).toUpperCase(),
+            name: supabaseUser.user_metadata?.full_name || 'User',
+            role: supabaseUser.user_metadata?.role || 'siswa',
+            password_hash: 'handled_by_supabase_auth',
+            kelas: supabaseUser.user_metadata?.kelas || null
+          })
+          .select()
+          .single();
+
+        if (insertError) {
+          console.error('Failed to create user profile:', insertError.message);
+          setUser(null);
+          return;
+        }
+
+        // Also create leaderboard entry
+        await supabase.from('leaderboard').insert({
+          user_id: supabaseUser.id,
+          total_berita: 0,
+          total_pengaduan: 0,
+          points: 0
+        });
+
+        userData = newUserData;
       }
 
       const { data: leaderboardData, error: leaderboardError } = await supabase
@@ -127,19 +155,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setLoading(true);
 
     try {
-      // First, find the user by nik_nis
-      const { data: userData, error: userError } = await supabase
-        .from('users')
-        .select('*')
-        .eq('nik_nis', nikNis)
-        .maybeSingle();
-
-      if (userError || !userData) {
-        setLoading(false);
-        return false;
-      }
-
-      // Then sign in with the user's email
+      // Sign in with constructed email
       const { data, error } = await supabase.auth.signInWithPassword({
         email: `${nikNis}@suarasekolah.id`,
         password
