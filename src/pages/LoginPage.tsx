@@ -98,8 +98,7 @@ const LoginPage: React.FC = () => {
           <div className="text-center mb-8">
             <div className="lg:hidden flex justify-center mb-6">
               <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-600 rounded-2xl flex items-center justify-center">
-                <img 
-                  src="https://i.ibb.co/Z6RcBhY/logo-smkn2-bekasi.png" 
+                <img src="https://res.cloudinary.com/dtjjgiitl/image/upload/q_auto:good,f_auto,fl_progressive/v1753233765/afkhjdao62kypwgtwobh.jpg" 
                   alt="SMKN 2 Bekasi Logo" 
                   className="w-12 h-12 object-contain"
                   onError={(e) => {
