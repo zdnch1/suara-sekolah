@@ -8,7 +8,7 @@ const LoadingScreen: React.FC = () => {
           <div className="relative">
             <div className="w-20 h-20 bg-gradient-to-br from-pink-500 to-purple-600 rounded-2xl flex items-center justify-center animate-pulse">
               <img 
-                src="https://i.ibb.co/Z6RcBhY" 
+                src="https://res.cloudinary.com/dtjjgiitl/image/upload/q_auto:good,f_auto,fl_progressive/v1753233765/afkhjdao62kypwgtwobh.jpg" 
                 alt="SMKN 2 Bekasi Logo" 
                 className="w-16 h-16 object-contain"
                 onError={(e) => {
