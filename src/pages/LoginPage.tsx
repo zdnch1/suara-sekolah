@@ -56,7 +56,7 @@ const LoginPage: React.FC = () => {
           <div className="flex justify-center mb-8">
             <div className="w-24 h-24 bg-white bg-opacity-20 rounded-3xl flex items-center justify-center backdrop-blur-sm">
               <img 
-                src="https://i.ibb.co/Z6RcBhY/logo-smkn2-bekasi.png" 
+                src="https://i.ibb.co/Z6RcBhY" 
                 alt="SMKN 2 Bekasi Logo" 
                 className="w-16 h-16 object-contain"
                 onError={(e) => {
