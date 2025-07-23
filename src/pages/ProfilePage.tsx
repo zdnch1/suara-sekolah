@@ -70,7 +70,6 @@ const ProfilePage: React.FC = () => {
     }
   };
   const badges = [
-  const handlePasswordChange = async () => {
     if (passwordData.newPassword !== passwordData.confirmPassword) {
       alert('Password baru dan konfirmasi tidak cocok');
       return;
@@ -98,6 +97,7 @@ const ProfilePage: React.FC = () => {
   };
     { name: 'Kontributor Aktif', icon: '🌟', description: 'Aktif posting konten' },
     { name: 'Reporter Hebat', icon: '📢', description: 'Sering melaporkan masalah' },
+  const badges = [
     { name: 'Sahabat Konselor AI', icon: '🤖', description: 'Sering chat dengan AI' },
     { name: 'Guru Inspiratif', icon: '🎓', description: 'Mentor terbaik' },
     { name: 'Super Admin', icon: '👑', description: 'Administrator platform' },
@@ -346,6 +346,7 @@ const ProfilePage: React.FC = () => {
             <div className="space-y-3">
               <button className="w-full flex items-center space-x-3 p-3 bg-purple-50 dark:bg-purple-900 text-purple-700 dark:text-purple-300 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors">
                 onClick={() => setShowPasswordModal(true)}
+              >
                 <Key size={20} />
                 <span>Ubah Password</span>
               </button>
@@ -364,9 +365,6 @@ const ProfilePage: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
-};
 
       {/* Password Change Modal */}
       {showPasswordModal && (
@@ -436,4 +434,7 @@ const ProfilePage: React.FC = () => {
           </div>
         </div>
       )}
+    </div>
+  );
+};
 export default ProfilePage;
