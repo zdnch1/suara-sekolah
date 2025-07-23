@@ -69,7 +69,8 @@ const ProfilePage: React.FC = () => {
       alert('Gagal memperbarui profil');
     }
   };
-  const badges = [
+
+  const handlePasswordChange = async () => {
     if (passwordData.newPassword !== passwordData.confirmPassword) {
       alert('Password baru dan konfirmasi tidak cocok');
       return;
@@ -95,10 +96,11 @@ const ProfilePage: React.FC = () => {
       alert('Gagal mengubah password');
     }
   };
-    { name: 'Kontributor Aktif', icon: '🌟', description: 'Aktif posting konten' },
-    { name: 'Reporter Hebat', icon: '📢', description: 'Sering melaporkan masalah' },
+
   const badges = [
     { name: 'Sahabat Konselor AI', icon: '🤖', description: 'Sering chat dengan AI' },
+    { name: 'Kontributor Aktif', icon: '🌟', description: 'Aktif posting konten' },
+    { name: 'Reporter Hebat', icon: '📢', description: 'Sering melaporkan masalah' },
     { name: 'Guru Inspiratif', icon: '🎓', description: 'Mentor terbaik' },
     { name: 'Super Admin', icon: '👑', description: 'Administrator platform' },
     { name: 'Guardian', icon: '🛡️', description: 'Menjaga keamanan platform' }
@@ -344,8 +346,9 @@ const ProfilePage: React.FC = () => {
               Quick Actions
             </h2>
             <div className="space-y-3">
-              <button className="w-full flex items-center space-x-3 p-3 bg-purple-50 dark:bg-purple-900 text-purple-700 dark:text-purple-300 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors">
+              <button
                 onClick={() => setShowPasswordModal(true)}
+                className="w-full flex items-center space-x-3 p-3 bg-purple-50 dark:bg-purple-900 text-purple-700 dark:text-purple-300 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors"
               >
                 <Key size={20} />
                 <span>Ubah Password</span>
@@ -437,4 +440,5 @@ const ProfilePage: React.FC = () => {
     </div>
   );
 };
+
 export default ProfilePage;
