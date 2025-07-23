@@ -3,19 +3,15 @@ import { Eye, EyeOff, MessageSquare, Users, Zap } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 const LoginPage: React.FC = () => {
-  const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     nikNis: '',
-    password: '',
-    name: '',
-    role: 'siswa' as 'siswa' | 'guru' | 'osis' | 'admin',
-    kelas: ''
+    password: ''
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const { login, register } = useAuth();
+  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,16 +19,9 @@ const LoginPage: React.FC = () => {
     setError('');
 
     try {
-      if (isLogin) {
-        const success = await login(formData.nikNis, formData.password);
-        if (!success) {
-          setError('NIK/NIS atau password salah');
-        }
-      } else {
-        const success = await register(formData);
-        if (!success) {
-          setError('Gagal mendaftar. Coba lagi.');
-        }
+      const success = await login(formData.nikNis, formData.password);
+      if (!success) {
+        setError('NIK/NIS atau password salah');
       }
     } catch (err) {
       setError('Terjadi kesalahan. Coba lagi.');
@@ -41,7 +30,7 @@ const LoginPage: React.FC = () => {
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({
       ...prev,
       [e.target.name]: e.target.value
@@ -60,7 +49,7 @@ const LoginPage: React.FC = () => {
                 alt="SMKN 2 Bekasi Logo" 
                 className="w-16 h-16 object-contain"
                 onError={(e) => {
-                  e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTIiIGZpbGw9IiM3OTU1RjciLz4KPHRleHQgeD0iMzIiIHk9IjQwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjgiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UzwvdGV4dD4KPC9zdmc+Cg==';
+                  e.currentTarget.src = 'data:image/svg+xml;base64,...';
                 }}
               />
             </div>
@@ -103,7 +92,7 @@ const LoginPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Right side - Form */}
+      {/* Right side - Login Form */}
       <div className="flex-1 flex items-center justify-center p-8">
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
@@ -114,17 +103,13 @@ const LoginPage: React.FC = () => {
                   alt="SMKN 2 Bekasi Logo" 
                   className="w-12 h-12 object-contain"
                   onError={(e) => {
-                    e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiByeD0iOCIgZmlsbD0iIzc5NTVGNyIvPgo8dGV4dCB4PSIyNCIgeT0iMzAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5TPC90ZXh0Pgo8L3N2Zz4K';
+                    e.currentTarget.src = 'data:image/svg+xml;base64,...';
                   }}
                 />
               </div>
             </div>
-            <h2 className="text-3xl font-bold text-white mb-2">
-              {isLogin ? 'Welcome Back!' : 'Join Us!'}
-            </h2>
-            <p className="text-gray-400">
-              {isLogin ? 'Login ke portal sekolah kekinian' : 'Daftar sekarang dan bergabung'}
-            </p>
+            <h2 className="text-3xl font-bold text-white mb-2">Welcome Back!</h2>
+            <p className="text-gray-400">Login ke portal sekolah kekinian</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -132,59 +117,6 @@ const LoginPage: React.FC = () => {
               <div className="bg-red-500 bg-opacity-20 border border-red-500 text-red-400 px-4 py-3 rounded-lg">
                 {error}
               </div>
-            )}
-
-            {!isLogin && (
-              <>
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Nama Lengkap
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                    placeholder="Masukkan nama lengkap"
-                    required
-                  />
-                </div>
-
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Role
-                  </label>
-                  <select
-                    name="role"
-                    value={formData.role}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                    required
-                  >
-                    <option value="siswa">Siswa</option>
-                    <option value="guru">Guru</option>
-                    <option value="osis">OSIS</option>
-                  </select>
-                </div>
-
-                {formData.role === 'siswa' && (
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Kelas
-                    </label>
-                    <input
-                      type="text"
-                      name="kelas"
-                      value={formData.kelas}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                      placeholder="Contoh: 11 IPA 1"
-                    />
-                  </div>
-                )}
-              </>
             )}
 
             <div>
@@ -229,10 +161,9 @@ const LoginPage: React.FC = () => {
               disabled={loading}
               className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
             >
-              {loading ? 'Loading...' : (isLogin ? 'Masuk' : 'Daftar')}
+              {loading ? 'Loading...' : 'Masuk'}
             </button>
           </form>
-
         </div>
       </div>
     </div>
