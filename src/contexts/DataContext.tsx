@@ -303,7 +303,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
           sender:users!chat_message_sender_id_fkey(name),
           receiver:users!chat_message_receiver_id_fkey(name)
         `)
-        .or(`sender_id.eq.${user.id},receiver_id.eq.${user.id},group_id.is.not.null`)
+        .or(`sender_id.eq.${user.id},receiver_id.eq.${user.id},group_id.not.is.null`)
         .order('created_at', { ascending: true });
 
       if (error) throw error;

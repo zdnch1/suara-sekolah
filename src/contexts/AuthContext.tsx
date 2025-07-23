@@ -183,7 +183,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         .from('users')
         .select('display_id')
         .eq('display_id', displayId)
-        .single();
+        .maybeSingle();
 
       // Generate new ID if exists
       while (existingUser) {
@@ -192,7 +192,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           .from('users')
           .select('display_id')
           .eq('display_id', displayId)
-          .single();
+          .maybeSingle();
         existingUser = data;
       }
 
